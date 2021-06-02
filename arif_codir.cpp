@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <string>
 #include <sstream>
-constexpr short int SIZE_OF_CHARS = 15;
+constexpr short int SIZE_OF_CHARS = 8;
 using namespace std;
 
 int main()
@@ -39,13 +39,13 @@ int main()
         freq[s.first][1] = a;
         freq[s.first][2] = b;
 
-        cout << s.first << " ";
-        cout.width(10);
-        cout << freq[s.first][0] << " ";
-        cout.width(10);
-        cout << freq[s.first][1] << " ";
-        cout.width(10);
-        cout << freq[s.first][2] << endl;
+        //cout << s.first << " ";
+        //cout.width(10);
+        //cout << freq[s.first][0] << " ";
+        //cout.width(10);
+        //cout << freq[s.first][1] << " ";
+        //cout.width(10);
+        //cout << freq[s.first][2] << endl;
 
         a = b;
     }
@@ -59,40 +59,38 @@ int main()
         l = _l;
         h = _h;
         i++;
-        cout << endl;
-        cout << "Encode: " << i << endl;
-        cout << "l: " << setprecision(100) << l << endl;
-        cout << "h: " << setprecision(100) << h << endl;
-        cout << endl;
+        //cout << endl;
+        //cout << "Encode: " << i << endl;
+        //cout << "l: " << setprecision(100) << l << endl;
+        //cout << "h: " << setprecision(100) << h << endl;
+        //cout << endl;
 
         if (i % SIZE_OF_CHARS == 0)
         {
-        //    stringstream s1, s2;
-        //    s1 << setprecision(100) << l;
-        //    s2 << setprecision(100) << h;
-        //    cout << s1.str() << endl;
-        //    cout << s2.str() << endl;
-        //    if (s1.str()!=s2.str())
-        //    {
-        //        for (int i = 0; i < 100; i++)
-        //        {
-        //            if (s1.str()[i] != s2.str()[i])
-        //            {
-        //                s1.str()[i] += 1;
-        //                char buf[100];
-        //                auto len = s1.str().copy(buf, 1, i);
-        //                buf[len] = '\0';
-        //                cout << buf << endl;
-        //                break;
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        cout << s1.str() << endl;
-        //    }
+            stringstream s1, s2;
+            s1 << setprecision(100) << l;
+            s2 << setprecision(100) << h;
+            if (s1.str()!=s2.str())
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    if (s1.str()[i] != s2.str()[i])
+                    {
+                        char buf[100];
+                        auto len = s1.str().copy(buf, i+1, 0);
+                        buf[len - 1]++;
+                        buf[len] = '\0';
+                        fout << buf;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                fout << s1.str();
+            }
             
-            fout << l;
+            //fout << l;
             l = 0;
             h = 1;
             i = 0;
@@ -101,7 +99,29 @@ int main()
 
     if (i % SIZE_OF_CHARS)
     {
-        fout << l;
+        stringstream s1, s2;
+        s1 << setprecision(100) << l;
+        s2 << setprecision(100) << h;
+        if (s1.str() != s2.str())
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                if (s1.str()[i] != s2.str()[i])
+                {
+                    char buf[100];
+                    auto len = s1.str().copy(buf, i + 1, 0);
+                    buf[len - 1]++;
+                    buf[len] = '\0';
+                    fout << buf;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            fout << s1.str();
+        }
+
     }
 
     return 0;
